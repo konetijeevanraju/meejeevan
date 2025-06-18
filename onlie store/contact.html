@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Green Harvest - Contact</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 8px 18px rgba(46, 125, 50, 0.15);
+      padding: 30px 40px;
+    }
+    h2 {
+      color: #2e7d32;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    p.subtitle {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #555;
+    }
+    .contact-info, .contact-form {
+      margin-bottom: 30px;
+    }
+    .contact-info h3, .contact-form h3 {
+      color: #2e7d32;
+      margin-bottom: 15px;
+    }
+    .contact-info p {
+      margin: 8px 0;
+      font-size: 1.05rem;
+    }
+    .social-media a {
+      color: #2e7d32;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    .social-media a:hover {
+      color: #4caf50;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    input, textarea {
+      padding: 12px 15px;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1.5px solid #ccc;
+      transition: border-color 0.3s ease;
+      resize: vertical;
+    }
+    input:focus, textarea:focus {
+      border-color: #2e7d32;
+      outline: none;
+    }
+    button {
+      background: #2e7d32;
+      color: white;
+      padding: 15px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background: #4caf50;
+    }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 400px;
+      width: 90%;
+      position: relative;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    .modal-content h3 {
+      margin-top: 0;
+      color: #2e7d32;
+    }
+    .close {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #888;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Contact Us</h2>
+    <p class="subtitle">Get in touch with us for any queries. We're here to help!</p>
+
+    <div class="contact-info">
+      <h3>Our Contact Information</h3>
+      <p><strong>Phone:</strong> +1 (123) 456-7890</p>
+      <p><strong>Email:</strong> jeevankoneti646@gmail.com</p>
+      <p><strong>Address:</strong> 123 Main Street, Chennai, Tamil Nadu</p>
+      <div class="social-media">
+        <h3>Follow Us</h3>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i> Facebook</a> |
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> Twitter</a> |
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> Instagram</a>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <h3>Send Us a Message</h3>
+      <form id="contactForm" onsubmit="event.preventDefault(); sendEmail();">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="email" id="email" placeholder="Your Email" required />
+        <input type="tel" id="phone" placeholder="Your Phone Number (optional)" />
+        <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Optional: User Profile Modal -->
+  <div id="profileModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3>User Profile</h3>
+      <input type="text" id="profileName" placeholder="Full Name" required />
+      <input type="tel" id="profileMobile" placeholder="Mobile Number" required />
+      <input type="email" id="profileEmail" placeholder="Email Address" required />
+      <button onclick="submitProfile()">Submit</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
+  <script>
+    emailjs.init("YOUR_USER_ID"); // Replace with your EmailJS user ID
+
+    function sendEmail() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (!name || !email || !message) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+        user_name: name,
+        user_email: email,
+        user_phone: phone,
+        user_message: message
+      })
+      .then(() => {
+        alert("✅ Message sent successfully!");
+        document.getElementById('contactForm').reset();
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("❌ Failed to send message.");
+      });
+    }
+
+    // Modal functions (optional)
+    function openModal() {
+      document.getElementById('profileModal').style.display = 'flex';
+    }
+    function closeModal() {
+      document.getElementById('profileModal').style.display = 'none';
+    }
+    window.onclick = function(event) {
+      const modal = document.getElementById('profileModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+    function submitProfile() {
+      // You can add profile form submission logic here
+      alert("Profile submitted!");
+      closeModal();
+    }
+  </script>
+</body>
+</html>

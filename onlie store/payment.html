@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Garlic - Payment Options</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f3f3f3;
+      padding: 30px;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      display: block;
+      width: 80%;
+      margin: 15px auto;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      background-color: #4CAF50;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #45a049;
+    }
+
+    .back {
+      margin-top: 20px;
+      display: block;
+      color: #555;
+      text-decoration: underline;
+    }
+
+    .qr-container {
+      margin-top: 30px;
+    }
+
+    .qr-container img {
+      width: 250px;
+      height: 250px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Select Payment Method</h2>
+
+  <button class="btn" onclick="showUPI()">Pay using GPay / PhonePe / UPI ID</button>
+  <button class="btn" onclick="showQR()">Scan QR Code to Pay</button>
+
+  <div id="upiForm" style="display: none; text-align: left; margin-top: 20px;">
+    <h3>Enter UPI & Address Details</h3>
+    <input type="text" id="upi" placeholder="Enter your UPI ID" style="width: 100%; padding: 10px; margin-bottom: 10px;" />
+    <input type="text" id="address" placeholder="Enter Delivery Address" style="width: 100%; padding: 10px; margin-bottom: 10px;" />
+    <input type="number" id="qty" placeholder="Quantity in kg" style="width: 100%; padding: 10px; margin-bottom: 10px;" onchange="calcTotal()" />
+    <p id="totalPrice" style="font-weight: bold;">Total: ₹0</p>
+    <button class="btn" onclick="confirmUPI()">Confirm & Pay</button>
+  </div>
+
+  <div id="qrCode" class="qr-container" style="display: none;">
+    <h3>Scan this QR Code</h3>
+    <img src="WhatsApp Image 2025-03-24 at 13.21.10_a4d7133c.jpg" alt="QR Code" />
+    <p>Once paid, your order will be processed.</p>
+  </div>
+
+  <a href="garlic-product.html" class="back">← Go back to Product Page</a>
+</div>
+
+<script>
+  function showUPI() {
+    document.getElementById("upiForm").style.display = "block";
+    document.getElementById("qrCode").style.display = "none";
+  }
+
+  function showQR() {
+    document.getElementById("upiForm").style.display = "none";
+    document.getElementById("qrCode").style.display = "block";
+  }
+
+  function calcTotal() {
+    const qty = parseInt(document.getElementById("qty").value) || 0;
+    const total = qty * 90;
+    document.getElementById("totalPrice").textContent = "Total: ₹" + total;
+  }
+
+  function confirmUPI() {
+    const upi = document.getElementById("upi").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const qty = document.getElementById("qty").value;
+
+    if (!upi || !address || !qty) {
+      alert("❗ Please fill all fields.");
+      return;
+    }
+
+    alert("✅ Payment request sent to your UPI. Please complete the payment. Your order will be confirmed.");
+  }
+</script>
+
+</body>
+</html>
